@@ -37,7 +37,7 @@
         {
             "name": "github.com/coreos/go-oidc",
             "branch": "master",
-            "revision": "f828b1fc9b58b59bd70ace766bfc190216b58b01",
+            "revision": "cf9c3b4fab2871c65040b7a4573b2e2ec1b483bb",
             "packages": [
                 "http",
                 "jose",
@@ -59,7 +59,7 @@
         {
             "name": "github.com/davecgh/go-spew",
             "version": "v1.1.0",
-            "revision": "a7a0063072ed89d04285d3d3362aa590ed9f7878",
+            "revision": "346938d642f2ec3594ed81d874461961cd0faa76",
             "packages": [
                 "spew"
             ]
@@ -67,7 +67,7 @@
         {
             "name": "github.com/docker/distribution",
             "version": "v2.6.0",
-            "revision": "89c0dabba84ec82bd4357e848bedc6fb4a61d221",
+            "revision": "325b0804fef3a66309d962357aac3c2ce3f4d329",
             "packages": [
                 "digest",
                 "reference"
@@ -183,7 +183,7 @@
         {
             "name": "github.com/jonboulle/clockwork",
             "version": "v0.1.0",
-            "revision": "e6ec3ec5da5cce15fff8966d365c17f6d01b61a9",
+            "revision": "2eee05ed794112d45db504eb05aa693efd2b8b09",
             "packages": [
                 "."
             ]
@@ -233,7 +233,7 @@
         {
             "name": "golang.org/x/crypto",
             "branch": "master",
-            "revision": "453249f01cfeb54c3d549ddb75ff152ca243f9d8",
+            "revision": "40541ccb1c6e64c947ed6f606b8a6cb4b67d7436",
             "packages": [
                 "ssh/terminal"
             ]
@@ -256,7 +256,7 @@
         {
             "name": "golang.org/x/oauth2",
             "branch": "master",
-            "revision": "810daf0509f84359cfa9527f6ea4886f1dbabfc5",
+            "revision": "efb10a30610e617dbb17fc243f4cc61a8cfa2903",
             "packages": [
                 ".",
                 "google",
@@ -268,7 +268,7 @@
         {
             "name": "golang.org/x/sys",
             "branch": "master",
-            "revision": "76cc09b634294339fa19ec41b5f2a0b3932cea8b",
+            "revision": "e48874b42435b4347fc52bdee0424a52abc974d7",
             "packages": [
                 "unix"
             ]
@@ -276,7 +276,7 @@
         {
             "name": "golang.org/x/text",
             "branch": "master",
-            "revision": "d680ca3ed853995402af43b866311167281bdc20",
+            "revision": "f28f36722d5ef2f9655ad3de1f248e3e52ad5ebd",
             "packages": [
                 "internal/gen",
                 "internal/triegen",
@@ -498,7 +498,7 @@
         {
             "name": "k8s.io/kubernetes",
             "branch": "master",
-            "revision": "c1f84f3aeb3cdce2550b2bb328b31cf01343fbd0",
+            "revision": "815b340f8d7200f4c39454ec73a29ebf577ab074",
             "packages": [
                 "pkg/api",
                 "pkg/api/v1",
