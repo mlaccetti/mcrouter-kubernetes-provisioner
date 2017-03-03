@@ -1,0 +1,15 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: memcached-cluster-pv
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "standard"
+spec:
+  capacity:
+    storage: 10Mi
+  accessModes:
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Recycle
+  nfs:
+    path: /srv/nfs
+    server: sadbox.nih.ca

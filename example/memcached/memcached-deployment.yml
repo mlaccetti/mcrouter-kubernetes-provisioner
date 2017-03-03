@@ -1,0 +1,18 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: memcached
+  labels:
+    name: memcached-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: memcached
+    spec:
+      containers:
+      - name: memcached
+        image: memcached:1.4-alpine
+        ports:
+        - containerPort: 11211

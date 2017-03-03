@@ -1,0 +1,20 @@
+# This creates a headless service that allows us to look up all memcached instances via k8s DNS
+#
+# i.e.
+# `nslookup memcached-service`
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: memcached-service
+  labels:
+  	name: memcached-deployment-service
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - protocol: TCP
+      port: 11211
+      targetPort: 11211
+  selector:
+    app: memcached

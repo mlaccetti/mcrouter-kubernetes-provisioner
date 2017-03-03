@@ -1,0 +1,24 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: mcrouter
+  labels:
+    name: mcrouter-provisioner
+spec:
+  volumes:
+  - name: mcrouter-provisioner-pv-storage
+    persistentVolumeClaim:
+    claimName: memcached-cluster-pvc
+
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mcrouter
+    spec:
+      containers:
+      - name: mcrouter-provisioner
+        image: mlaccetti/mcrouter-provisioner:latest
+        volumeMounts:
+        - mountPath: "/tmp/mcrouter"
+          name: mcrouter-provisioner-pv-storage

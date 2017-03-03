@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: mcrouter
+  labels:
+    name: mcrouter-deployment
+spec:
+  volumes:
+    - name: mcrouter-pv-storage
+    persistentVolumeClaim:
+      claimName: memcached-cluster-pvc
+
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mcrouter
+    spec:
+      containers:
+      - name: mcrouter
+        image: jamescarr/mcrouter:1.0.1
+        command:
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: "/tmp/mcrouter"
+          name: mcrouter-pv-storage
+          readOnly: true

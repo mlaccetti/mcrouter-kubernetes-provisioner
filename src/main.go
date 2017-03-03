@@ -14,30 +14,32 @@ import (
 	"k8s.io/client-go/1.5/pkg/util/wait"
 	"k8s.io/client-go/1.5/tools/cache"
 	"k8s.io/client-go/1.5/tools/clientcmd"
+	"runtime"
 )
 
 func podCreated(obj interface{}) {
 	pod := obj.(*v1.Pod)
-	fmt.Println("Pod created: "+pod.ObjectMeta.Name)
+	fmt.Println("Pod created: " + pod.ObjectMeta.Name)
+	fmt.Println("Pod labels: ", pod.ObjectMeta.Labels)
 }
 
 func podDeleted(obj interface{}) {
 	pod := obj.(*v1.Pod)
-	fmt.Println("Pod deleted: "+pod.ObjectMeta.Name)
+	fmt.Println("Pod deleted: " + pod.ObjectMeta.Name)
 }
 
-func watchPods(client *kubernetes.Clientset) cache.Store {
+func watchPods(client *kubernetes.Clientset) {
 	//Define what we want to look for (Pods)
 	watchlist := cache.NewListWatchFromClient(client.CoreClient, "pods", api.NamespaceAll, fields.Everything())
 
 	resyncPeriod := 30 * time.Minute
 
 	//Setup an informer to call functions when the watchlist changes
-	eStore, eController := cache.NewInformer(
+	_, eController := cache.NewInformer(
 		watchlist,
 		&v1.Pod{},
 		resyncPeriod,
-		cache.ResourceEventHandlerFuncs {
+		cache.ResourceEventHandlerFuncs{
 			AddFunc:    podCreated,
 			DeleteFunc: podDeleted,
 		},
@@ -45,7 +47,6 @@ func watchPods(client *kubernetes.Clientset) cache.Store {
 
 	//Run the controller as a goroutine
 	go eController.Run(wait.NeverStop)
-	return eStore
 }
 
 func main() {
@@ -68,4 +69,8 @@ func main() {
 	}
 
 	watchPods(clientset)
+
+	runtime.Goexit()
+
+	fmt.Println("Exit")
 }

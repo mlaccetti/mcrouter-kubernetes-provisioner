@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mcrouter-service
+  labels:
+  	name: mcrouter-deployment-service
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: HTTP
+      port: 5000
+      targetPort: 5000
+  selector:
+    app: mcrouter
