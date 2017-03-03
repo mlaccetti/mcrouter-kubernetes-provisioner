@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os/user"
+	"runtime"
 	"strings"
 	"time"
 
@@ -11,16 +12,47 @@ import (
 	"k8s.io/client-go/1.5/pkg/api"
 	"k8s.io/client-go/1.5/pkg/api/v1"
 	"k8s.io/client-go/1.5/pkg/fields"
+	"k8s.io/client-go/1.5/pkg/labels"
 	"k8s.io/client-go/1.5/pkg/util/wait"
 	"k8s.io/client-go/1.5/tools/cache"
 	"k8s.io/client-go/1.5/tools/clientcmd"
-	"runtime"
 )
+
+var clientset *kubernetes.Clientset = nil
+
+func getMemcachedPods() (map[string]string, error) {
+	kubeLabelSelector, err := labels.Parse("app in (memcached)")
+
+	if err != nil {
+		return nil, err
+	}
+
+	pods, err := clientset.Core().Pods("").List(api.ListOptions{LabelSelector: kubeLabelSelector})
+	if err != nil {
+		return nil, err
+	}
+
+	memcachedPods := make(map[string]string)
+	for _, pod := range pods.Items {
+		memcachedPods[pod.Name] = pod.Status.PodIP
+	}
+
+	return memcachedPods, nil
+}
 
 func podCreated(obj interface{}) {
 	pod := obj.(*v1.Pod)
-	fmt.Println("Pod created: " + pod.ObjectMeta.Name)
-	fmt.Println("Pod labels: ", pod.ObjectMeta.Labels)
+
+	if pod.ObjectMeta.Labels["app"] == "memcached" {
+		fmt.Println("A new memcached pod was added: ", pod.Status.PodIP)
+
+		pods, err := getMemcachedPods()
+		if err != nil {
+			fmt.Println("We could not get a list of memcached pods. ", err)
+		}
+
+		fmt.Println("memcached pods: ", pods)
+	}
 }
 
 func podDeleted(obj interface{}) {
@@ -28,9 +60,9 @@ func podDeleted(obj interface{}) {
 	fmt.Println("Pod deleted: " + pod.ObjectMeta.Name)
 }
 
-func watchPods(client *kubernetes.Clientset) {
+func watchPods() {
 	//Define what we want to look for (Pods)
-	watchlist := cache.NewListWatchFromClient(client.CoreClient, "pods", api.NamespaceAll, fields.Everything())
+	watchlist := cache.NewListWatchFromClient(clientset.CoreClient, "pods", api.NamespaceAll, fields.Everything())
 
 	resyncPeriod := 30 * time.Minute
 
@@ -63,12 +95,12 @@ func main() {
 	}
 
 	// creates the clientset
-	clientset, err := kubernetes.NewForConfig(config)
+	clientset, err = kubernetes.NewForConfig(config)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	watchPods(clientset)
+	watchPods()
 
 	runtime.Goexit()
 
