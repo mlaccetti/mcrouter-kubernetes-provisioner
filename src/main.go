@@ -19,6 +19,7 @@ import (
 )
 
 var clientset *kubernetes.Clientset = nil
+var namespace *string = nil
 
 func getMemcachedPods() (map[string]string, error) {
 	kubeLabelSelector, err := labels.Parse("app in (memcached)")
@@ -27,7 +28,7 @@ func getMemcachedPods() (map[string]string, error) {
 		return nil, err
 	}
 
-	pods, err := clientset.Core().Pods("").List(api.ListOptions{LabelSelector: kubeLabelSelector})
+	pods, err := clientset.Core().Pods(*namespace).List(api.ListOptions{LabelSelector: kubeLabelSelector})
 	if err != nil {
 		return nil, err
 	}
@@ -44,8 +45,6 @@ func podCreated(obj interface{}) {
 	pod := obj.(*v1.Pod)
 
 	if pod.ObjectMeta.Labels["app"] == "memcached" {
-		fmt.Println("A new memcached pod was added: ", pod.Status.PodIP)
-
 		pods, err := getMemcachedPods()
 		if err != nil {
 			fmt.Println("We could not get a list of memcached pods. ", err)
@@ -87,8 +86,11 @@ func main() {
 	dir := usr.HomeDir
 	file := strings.Join([]string{dir, "/.kube/config"}, "")
 
+	// load our flags
+	namespace = flag.String("namespace", "", "namespace in kubernetes to find memcached pods")
 	kubeconfig := flag.String("kubeconfig", file, "absolute path to the kubeconfig file")
 	flag.Parse()
+
 	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
 	if err != nil {
 		panic(err.Error())
