@@ -3,7 +3,7 @@
     "default": {
       "servers": [
         {{if .servers}}
-          {{ range _, $value := .servers }}
+          {{ range $key, $value := .servers }}
             "{{$value}}:5000",
           {{end}}
         {{end}}
