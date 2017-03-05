@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/mlaccetti/mcrouter-kubernetes-provisioner/lib"
 	"k8s.io/client-go/1.5/kubernetes"
 	"k8s.io/client-go/1.5/pkg/api"
 	"k8s.io/client-go/1.5/pkg/api/v1"
@@ -20,6 +21,7 @@ import (
 
 var clientset *kubernetes.Clientset = nil
 var namespace *string = nil
+var mcrouterConfig *string = nil
 
 func getMemcachedPods() (map[string]string, error) {
 	kubeLabelSelector, err := labels.Parse("app in (memcached)")
@@ -41,7 +43,16 @@ func getMemcachedPods() (map[string]string, error) {
 	return memcachedPods, nil
 }
 
-func podCreated(obj interface{}) {
+func updateTemplate(pods map[string]string) (error) {
+	err := lib.Parse("./template/mcrouter-config.tpl", *mcrouterConfig, pods)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func podsModified(obj interface{}) {
 	pod := obj.(*v1.Pod)
 
 	if pod.ObjectMeta.Labels["app"] == "memcached" {
@@ -51,12 +62,12 @@ func podCreated(obj interface{}) {
 		}
 
 		fmt.Println("memcached pods: ", pods)
-	}
-}
 
-func podDeleted(obj interface{}) {
-	pod := obj.(*v1.Pod)
-	fmt.Println("Pod deleted: " + pod.ObjectMeta.Name)
+		err = updateTemplate(pods)
+		if err != nil {
+			fmt.Println("We could not update mcrouter config. ", err)
+		}
+	}
 }
 
 func watchPods() {
@@ -71,8 +82,8 @@ func watchPods() {
 		&v1.Pod{},
 		resyncPeriod,
 		cache.ResourceEventHandlerFuncs{
-			AddFunc:    podCreated,
-			DeleteFunc: podDeleted,
+			AddFunc:    podsModified,
+			DeleteFunc: podsModified,
 		},
 	)
 
@@ -89,6 +100,8 @@ func main() {
 	// load our flags
 	namespace = flag.String("namespace", "", "namespace in kubernetes to find memcached pods")
 	kubeconfig := flag.String("kubeconfig", file, "absolute path to the kubeconfig file")
+	mcrouterConfig = flag.String("mcrouterConfig", "mcrouter-config.json", "absolute path to the mcrouter config json location")
+
 	flag.Parse()
 
 	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)

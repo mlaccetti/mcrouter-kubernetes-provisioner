@@ -1,3 +1,4 @@
 vendor/*
 .idea
 .kube
+mcrouter-config.json

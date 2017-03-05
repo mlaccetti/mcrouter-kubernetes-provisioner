@@ -1,5 +1,5 @@
 {
-    "memo": "7914eab4108f586c66bcdb347d9cdcb5ea2338192d3c1313cdb8a52e39440b05",
+    "memo": "20c9cf64c10c1fcef3caee1fd1f2b98d71d6b0ea0d81cf625d814c18e044de47",
     "projects": [
         {
             "name": "cloud.google.com/go",
@@ -241,7 +241,7 @@
         {
             "name": "golang.org/x/net",
             "branch": "master",
-            "revision": "906cda9512f77671ab44f8c8563b13a8e707b230",
+            "revision": "d379faa25cbdc04d653984913a2ceb43b0bc46d7",
             "packages": [
                 "context",
                 "context/ctxhttp",
@@ -336,48 +336,6 @@
             "revision": "a3f3340b5840cee44f372bddb5880fcbc419b46a",
             "packages": [
                 "."
-            ]
-        },
-        {
-            "name": "k8s.io/apimachinery",
-            "branch": "master",
-            "revision": "c810e4931f2cf80a6f0a007f8ba9c05ef0165cee",
-            "packages": [
-                "pkg/api/meta",
-                "pkg/api/resource",
-                "pkg/apimachinery",
-                "pkg/apimachinery/announced",
-                "pkg/apimachinery/registered",
-                "pkg/apis/meta/v1",
-                "pkg/apis/meta/v1/unstructured",
-                "pkg/conversion",
-                "pkg/conversion/queryparams",
-                "pkg/fields",
-                "pkg/labels",
-                "pkg/openapi",
-                "pkg/runtime",
-                "pkg/runtime/schema",
-                "pkg/runtime/serializer",
-                "pkg/runtime/serializer/json",
-                "pkg/runtime/serializer/protobuf",
-                "pkg/runtime/serializer/recognizer",
-                "pkg/runtime/serializer/versioning",
-                "pkg/selection",
-                "pkg/types",
-                "pkg/util/errors",
-                "pkg/util/framer",
-                "pkg/util/intstr",
-                "pkg/util/json",
-                "pkg/util/net",
-                "pkg/util/rand",
-                "pkg/util/runtime",
-                "pkg/util/sets",
-                "pkg/util/validation",
-                "pkg/util/validation/field",
-                "pkg/util/wait",
-                "pkg/util/yaml",
-                "pkg/watch",
-                "third_party/forked/golang/reflect"
             ]
         },
         {
@@ -493,18 +451,6 @@
                 "1.5/tools/clientcmd/api/v1",
                 "1.5/tools/metrics",
                 "1.5/transport"
-            ]
-        },
-        {
-            "name": "k8s.io/kubernetes",
-            "branch": "master",
-            "revision": "815b340f8d7200f4c39454ec73a29ebf577ab074",
-            "packages": [
-                "pkg/api",
-                "pkg/api/v1",
-                "pkg/apis/extensions",
-                "pkg/util",
-                "pkg/util/parsers"
             ]
         }
     ]

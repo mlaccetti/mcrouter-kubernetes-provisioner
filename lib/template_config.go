@@ -1,34 +1,34 @@
-package main
+package lib
 
 import (
 	"log"
 	"os"
 	"text/template"
 )
-func parse(inputTemplate string, outputFile string) {
+
+func Parse(inputTemplate string, outputFile string, pods map[string]string) (error) {
 	_template, err := template.ParseFiles(inputTemplate)
 	if err != nil {
 		log.Print(err)
-		return
+		return err
 	}
 
 	_outputFile, err := os.Create(outputFile)
 	if err != nil {
 		log.Println("create file: ", err)
-		return
+		return err
 	}
 
-	// A sample config
-	config := map[string]string{
-		"textColor":      "#abcdef",
-		"linkColorHover": "#ffaacc",
-	}
+	templateConfig := make(map[string]map[string]string)
+	templateConfig["servers"] = pods
 
-	err = _template.Execute(_outputFile, config)
+	err = _template.Execute(_outputFile, templateConfig)
 	if err != nil {
 		log.Print("execute: ", err)
-		return
+		return err
 	}
 
 	_outputFile.Close()
+
+	return nil
 }

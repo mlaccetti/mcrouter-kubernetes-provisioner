@@ -6,6 +6,10 @@ In simple terms, it'll automatically re-create the `mcrouter` config file for a 
 through a Kubernetes deployment. The information for which `memcached` instances are available to put into the config is
 extracted via DNS lookup in Kubernetes.
 
+### FIXME
+
+Make sure we also trap the port
+
 ### Usage
 
 Please see the `example` directory to see how this all works.
