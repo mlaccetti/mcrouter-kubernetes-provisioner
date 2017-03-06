@@ -15,6 +15,7 @@ import (
 	"k8s.io/client-go/1.5/pkg/fields"
 	"k8s.io/client-go/1.5/pkg/labels"
 	"k8s.io/client-go/1.5/pkg/util/wait"
+	"k8s.io/client-go/1.5/rest"
 	"k8s.io/client-go/1.5/tools/cache"
 	"k8s.io/client-go/1.5/tools/clientcmd"
 )
@@ -92,27 +93,41 @@ func watchPods() {
 }
 
 func main() {
-	// uses the current context in kubeconfig
-	usr, _ := user.Current()
-	dir := usr.HomeDir
-	file := strings.Join([]string{dir, "/.kube/config"}, "")
-
 	// load our flags
+	inCluster := flag.Bool("incluster", true, "tell us if we are running within kubernetes or not (defaults to true)")
 	namespace = flag.String("namespace", "", "namespace in kubernetes to find memcached pods")
-	kubeconfig := flag.String("kubeconfig", file, "absolute path to the kubeconfig file")
-	mcrouterConfig = flag.String("mcrouterConfig", "mcrouter-config.json", "absolute path to the mcrouter config json location")
+	kubeconfig := flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
+	mcrouterConfig = flag.String("mcrouterconfig", "mcrouter-config.json", "absolute path to the mcrouter config json location")
 
 	flag.Parse()
 
-	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
-	if err != nil {
-		panic(err.Error())
-	}
+	if *inCluster {
+		// in-context
+		// creates the in-cluster config
+		config, err := rest.InClusterConfig()
+		if err != nil {
+			panic(err.Error())
+		}
+		// creates the clientset
+		clientset, err = kubernetes.NewForConfig(config)
+	} else {
+		if *kubeconfig == "" {
+			// uses the current context in kubeconfig
+			usr, _ := user.Current()
+			dir := usr.HomeDir
+			*kubeconfig = strings.Join([]string{dir, "/.kube/config"}, "")
+		}
 
-	// creates the clientset
-	clientset, err = kubernetes.NewForConfig(config)
-	if err != nil {
-		panic(err.Error())
+		config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		// creates the clientset
+		clientset, err = kubernetes.NewForConfig(config)
+		if err != nil {
+			panic(err.Error())
+		}
 	}
 
 	watchPods()
