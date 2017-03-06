@@ -6,6 +6,10 @@ dist: trusty
 services:
   - docker
 
+env:
+  secure: "YqWYGc+VHJhuVOG2HOMwnR0mPvOPVpyR8avd+IizYebXloV6aCPE/pDmM/2BP6rX9ULlqP7jlSsPWU37A2ZBXloT1J0kChyzuX0Jrk6/ddqLhHlOu5J/bHIfUgajV5zJ1rsJ0PYE1ng2GLtokbzXmyLaccHsd4PqJtZB9mkqpjRO0nV3zsdGA+pBLjIP7HdpzVJ6RJn8MLmc7tcj3qRuT0TvkVXcrfiMJvBxLasqi0NzodEv9K8QR/OFEX4QuuOfFzhewAlxTTBGfCHV6YnDZGiSUtuBxx+2DV/Q7p8jjVKSOvMyg5HpP0JBV96NO+lfRnMN7YfR7ABG4w9uLKX7fA2ylHEOP/FGeIwbCxbzIyPC/Ka9nHLNi+xpnQGt75CjUo+2O/avHJPQp3QEREfNEMcJKZMf+5O9JcLoxx8SF4YgnXRCAuD/5nBgun68fNZnhRnttQCGjEohu3QRl9NxKKvz7BZ2EdJLQuWkYwUJsKRnN7Dw0NDC0+3iLkWMevskasS/5PKzApe/TeyZGFDcMv384itd7LQly7SgjkOinrGfbtXOBLfZnQwervRBIKVlzIn8XISyJfEkYMvqB8URaVZp+T4II2MPVHQeh7bHA1w0Lvu1dW6fILN8oJOs7qYUYWtZu75XBupYHcfzyh7Oea8sx0Q/MQ1ol4hr/bViZsM="
+  secure: "beAmvYMMx+jMdBqAcAfZeGq/kd1xFjWksXUqrKYh+iRVJke3iJvloZwAdnbEdFTRx9XwrdOIGQioPyZR1+ie1fkjC+SXAHcHrZudEh7NEmHk+BlctG9No+mh049LN3O1eU7zq07uXLrGK2kmfdzg7UEFfXsEpLZHrfFi/w5ezs4OwziYFSrcxe6PBDPvYxSoEU1gu6Tqr0HWUJ72Kp6NGn7OWPJDFDjI2Zr+sF1Jg4VXly6QJtqhCAzLUzWuZOdAPklxYzPKKm7sSMxSFLVmoAaiK7gGLZ1eVHaAIhbL8u7WX54Kk2ClB7C+nAN+Zw40dAqFJtrI157DiUpg03k+djZq1fyCAtJdhK9bkZ8bCow0q9jUxA6qf+jUaBQx/x/t2rx3OsnoysDGeBCvyh1EdjAxP+jeCFAxCXPwYamHuqoSDAi0HYWX+AFWcwQEP76MPEGpsipDAjFopPeAAjshUCaQV8YTdGWqUyD7o2X7T1r/2pADYnT4o1LwTT5GPp3HI1Ft2VIION8LvqvVcvIZy2nNw2bc1ze1onA9pcPctaBDA6wU56WhQzBPU/x26S9oivhe3kMWqaGDZMAlyn7jXmIlMnzhsMGkgK9z8rprzvJC8Bd92D6yy3vRhmh9euLjuDdgAny6dGbWvqZXFu6QoQ5OaGTtl6A1K9fhawzJ/Vw="
+
 # skip the `go get` stuff, since we do all of that in Docker
 install: true
 
@@ -17,4 +21,6 @@ script:
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker push mlaccetti/elasticsearch-curator:$ELASTICSEARCH_CURATOR_VERSION
+  - docker push mlaccetti/mcrouter-kubernetes-provisioner:${DOCKER_TAG}
+
+travis encrypt MY_SECRET_ENV=super_secret --add
