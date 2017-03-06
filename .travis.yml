@@ -23,5 +23,3 @@ script:
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push mlaccetti/mcrouter-kubernetes-provisioner:${DOCKER_TAG}
-
-travis encrypt MY_SECRET_ENV=super_secret --add
