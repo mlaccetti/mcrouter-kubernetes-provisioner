@@ -1,0 +1,16 @@
+language: go
+
+sudo: required
+dist: trusty
+services:
+  - docker
+
+before_script:
+  - export
+
+script:
+  - ./travis-build.sh
+
+after_success:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push mlaccetti/elasticsearch-curator:$ELASTICSEARCH_CURATOR_VERSION

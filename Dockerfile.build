@@ -2,3 +2,13 @@ FROM golang:1.8-alpine
 
 LABEL MAINTAINER="Michael Laccetti <michael@laccetti.com>"
 
+RUN mkdir -p /go/src/github.com/mlaccetti/mcrouter-kubernetes-provisioner && \
+  apk add --no-cache bash gcc git musl-dev libc-dev
+
+VOLUME /go/src/github.com/mlaccetti/mcrouter-kubernetes-provisioner
+
+WORKDIR /go/src/github.com/mlaccetti/mcrouter-kubernetes-provisioner
+
+ENV GOOS=linux GOPATH=/go
+
+ENTRYPOINT ["/go/src/github.com/mlaccetti/mcrouter-kubernetes-provisioner/docker-build.sh"]
