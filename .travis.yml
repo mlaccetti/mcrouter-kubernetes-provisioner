@@ -2,8 +2,12 @@ language: go
 
 sudo: required
 dist: trusty
+
 services:
   - docker
+
+# skip the `go get` stuff, since we do all of that in Docker
+install: true
 
 before_script:
   - export
