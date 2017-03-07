@@ -13,7 +13,13 @@ spec:
     spec:
       containers:
         - name: nfs-server
-          image: jsafrane/nfs-data
+          image: argosy/nfs-server-alpine:latest
           securityContext:
             capabilities: {}
             privileged: true
+          volumeMounts:
+            - mountPath: /nfsshare
+              name: cache-volume
+      volumes:
+        - name: cache-volume
+          emptyDir: {}

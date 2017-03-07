@@ -14,3 +14,5 @@ spec:
       containers:
         - name: iscsi-server
           image: fabiand/iscsi-demo-target-tgtd:latest
+          ports:
+          - containerPort: 3260
