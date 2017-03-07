@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	logger "log"
 	"os"
 	"os/user"
@@ -120,7 +119,7 @@ func main() {
 
 	flag.Parse()
 
-	log.Printf("Processed flags: inCluster [ %b ] | namespace [ %s ] | kubeconfig [ %s ] | mcrouter config [ %s ]\n", inCluster, namespace, kubeconfig, mcrouterConfig)
+	log.Printf("Processed flags: inCluster [ %b ] | namespace [ %s ] | kubeconfig [ %s ] | mcrouter config [ %s ]\n", *inCluster, *namespace, *kubeconfig, *mcrouterConfig)
 
 	if *inCluster {
 		log.Println("Running in-cluster mode, loading config.")
@@ -150,7 +149,7 @@ func main() {
 			*kubeconfig = strings.Join([]string{dir, "/.kube/config"}, "")
 		}
 
-		log.Printf("Using %s as the kubeconfig.", kubeconfig)
+		log.Printf("Using %s as the kubeconfig.", *kubeconfig)
 
 		config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
 		if err != nil {
