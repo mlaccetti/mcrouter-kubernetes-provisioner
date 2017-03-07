@@ -19,6 +19,8 @@ Pre-conditions:
 - You have deployed the persistent volume
 - You have deployed the persistent volume claim
 
+If you don't have an NFS server available for testing, you can use the example `nfs-server.`  Make sure you modify the persistent volume to use the correct IP.
+
 First, deploy the `mcrouter-provisioner` - it'll mount the volume, create an empty config, and start listening for pod
 creation/removal events. As `memcached` pods come online, it'll grab their info and update the `mcrouter` config file.
 We are using a `deployment` as we want to ensure that one instance is always running.

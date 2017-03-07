@@ -7,8 +7,8 @@ metadata:
 spec:
   volumes:
     - name: mcrouter-pv-storage
-    persistentVolumeClaim:
-      claimName: memcached-cluster-pvc
+      persistentVolumeClaim:
+        claimName: memcached-cluster-pvc
 
   replicas: 3
   template:
@@ -23,6 +23,6 @@ spec:
         ports:
         - containerPort: 5000
         volumeMounts:
-        - mountPath: "/tmp/mcrouter"
+        - mountPath: "/mnt/data"
           name: mcrouter-pv-storage
           readOnly: true

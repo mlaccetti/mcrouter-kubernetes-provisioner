@@ -1,0 +1,19 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: mcrouter-nfs-server
+  labels:
+    name: nfs-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nfs-server
+    spec:
+      containers:
+        - name: nfs-server
+          image: jsafrane/nfs-data
+          securityContext:
+            capabilities: {}
+            privileged: true

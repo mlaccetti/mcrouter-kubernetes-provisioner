@@ -1,0 +1,10 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mcrouter-iscsi-server
+spec:
+  ports:
+    - name: iscsi
+      port: 3260
+  selector:
+    app: iscsi-server
