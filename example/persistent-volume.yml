@@ -7,7 +7,7 @@ spec:
     storage: 10Mi
   accessModes:
     - ReadOnlyMany
-  persistentVolumeReclaimPolicy: Recycle
+    - ReadWriteOnce
   nfs:
     path: "/srv/nfs"
     server: sadbox.nih.ca

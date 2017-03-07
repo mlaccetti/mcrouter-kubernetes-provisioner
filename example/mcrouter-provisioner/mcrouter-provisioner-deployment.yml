@@ -3,13 +3,13 @@ apiVersion: extensions/v1beta1
 metadata:
   name: mcrouter-provisioner
   labels:
-    name: mcrouter-provisioner
+    name: mcrouter-provisioner-deployment
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: mcrouter
+        app: mcrouter-provisioner
     spec:
       volumes:
         - name: mcrouter-provisioner-pv-storage
@@ -22,3 +22,4 @@ spec:
         volumeMounts:
         - mountPath: "/srv/nfs"
           name: mcrouter-provisioner-pv-storage
+          readOnly: false

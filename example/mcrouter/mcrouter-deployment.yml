@@ -5,21 +5,20 @@ metadata:
   labels:
     name: mcrouter-deployment
 spec:
-  volumes:
-    - name: mcrouter-pv-storage
-      persistentVolumeClaim:
-        claimName: memcached-cluster-pvc
-
   replicas: 3
   template:
     metadata:
       labels:
         app: mcrouter
     spec:
+      volumes:
+      - name: mcrouter-pv-storage
+        persistentVolumeClaim:
+          claimName: memcached-cluster-pvc
       containers:
       - name: mcrouter
         image: jamescarr/mcrouter:1.0.1
-        command:
+        command: ["mcrouter", "-p", "5000", "-f", "/srv/nfs/mcrouter-config.json"]
         ports:
         - containerPort: 5000
         volumeMounts:
