@@ -26,6 +26,7 @@ var log = logger.New(os.Stdout, "[mkp]", logger.Ldate | logger.Ltime | logger.Lm
 var clientset *kubernetes.Clientset = nil
 var namespace *string = nil
 var mcrouterConfig *string = nil
+var inputTemplate *string = nil
 
 func getMemcachedPods() (map[string]string, error) {
 	log.Println("Getting memcached pods from kubernetes.")
@@ -55,7 +56,7 @@ func getMemcachedPods() (map[string]string, error) {
 func updateConfigFile(pods map[string]string) (error) {
 	log.Println("Updating config file.")
 
-	err := lib.Parse("./template/mcrouter-config.tpl", *mcrouterConfig, pods)
+	err := lib.Parse(*inputTemplate, *mcrouterConfig, pods)
 	if err != nil {
 		log.Fatal("Could not create load mcrouter config template.", err)
 		return err
@@ -114,12 +115,13 @@ func main() {
 	// load our flags
 	inCluster := flag.Bool("incluster", true, "tell us if we are running within kubernetes or not (defaults to true)")
 	namespace = flag.String("namespace", "", "namespace in kubernetes to find memcached pods")
-	kubeconfig := flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
-	mcrouterConfig = flag.String("mcrouterconfig", "mcrouter-config.json", "absolute path to the mcrouter config json location")
+	kubeconfig := flag.String("kubeconfig", "", "path to the kubeconfig file")
+	mcrouterConfig = flag.String("mcrouterconfig", "mcrouter-config.json", "path to the mcrouter config json location")
+	inputTemplate = flag.String("inputtemplate", "./template/mcrouter-config.tpl", "path to the mcrouter-config.tpl file")
 
 	flag.Parse()
 
-	log.Printf("Processed flags: inCluster [ %b ] | namespace [ %s ] | kubeconfig [ %s ] | mcrouter config [ %s ]\n", *inCluster, *namespace, *kubeconfig, *mcrouterConfig)
+	log.Printf("Processed flags: in cluster [ %b ] | namespace [ %s ] | kubeconfig [ %s ] | mcrouter config [ %s ]\n", *inCluster, *namespace, *kubeconfig, *mcrouterConfig)
 
 	if *inCluster {
 		log.Println("Running in-cluster mode, loading config.")

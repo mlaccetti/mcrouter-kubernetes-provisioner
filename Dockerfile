@@ -2,12 +2,19 @@ FROM golang:1.8-alpine
 
 LABEL MAINTAINER="Michael Laccetti <michael@laccetti.com>"
 
+ENV MCROUTERCONFIG=/srv/nfs/mcrouter-config.json
+ENV INPUTTEMPLATE=/mkp/template/mcrouter-config.tpl
+ENV NAMESPACE=
+ENV INCLUSTER=true
+ENV KUBECONFIG=
+
 RUN mkdir -p /mkp/template
 
+ADD docker-entrypoint.sh /mkp/docker-entrypoint.sh
 ADD mcrouter-kuberentes-provisioner /mkp/mcrouter-kuberentes-provisioner
-
 ADD ./template/mcrouter-config.tpl /mkp/template/mcrouter-config.tpl
 
-RUN chmod +x /mkp/mcrouter-kuberentes-provisioner
+RUN chmod +x /mkp/mcrouter-kuberentes-provisioner && \
+  chmod +x /mkp/docker-entrypoint.sh
 
-ENTRYPOINT ["/mkp/mcrouter-kuberentes-provisioner"]
+ENTRYPOINT [ "/mkp/docker-entrypoint.sh" ]
