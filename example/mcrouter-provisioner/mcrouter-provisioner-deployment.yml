@@ -18,6 +18,7 @@ spec:
       containers:
       - name: mcrouter-provisioner
         image: mlaccetti/mcrouter-kubernetes-provisioner:master
+        imagePullPolicy: Always
         volumeMounts:
         - mountPath: "/srv/nfs"
           name: mcrouter-provisioner-pv-storage
