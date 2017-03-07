@@ -2,6 +2,7 @@ FROM golang:1.8-alpine
 
 LABEL MAINTAINER="Michael Laccetti <michael@laccetti.com>"
 
+# You probably want to override this - either via CLI, or via k8s variables
 ENV MCROUTERCONFIG=/srv/nfs/mcrouter-config.json
 ENV INPUTTEMPLATE=/mkp/template/mcrouter-config.tpl
 ENV NAMESPACE=
