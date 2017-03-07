@@ -19,5 +19,5 @@ spec:
       - name: mcrouter-provisioner
         image: mlaccetti/mcrouter-kubernetes-provisioner:master
         volumeMounts:
-        - mountPath: "/data"
+        - mountPath: "/srv/nfs"
           name: mcrouter-provisioner-pv-storage

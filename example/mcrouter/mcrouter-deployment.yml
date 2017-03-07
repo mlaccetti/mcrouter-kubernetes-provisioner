@@ -23,6 +23,6 @@ spec:
         ports:
         - containerPort: 5000
         volumeMounts:
-        - mountPath: "/mnt/data"
+        - mountPath: "/srv/nfs"
           name: mcrouter-pv-storage
           readOnly: true

@@ -6,6 +6,6 @@ RUN mkdir /mkp
 
 WORKDIR /mkp
 
-ADD mcrouter-kuberentes-provisioner /mkp
+ADD mcrouter-kuberentes-provisioner /mkp/mcrouter-kuberentes-provisioner
 
 ENTRYPOINT ["/mkp/mcrouter-kubernetes-provisioner"]
