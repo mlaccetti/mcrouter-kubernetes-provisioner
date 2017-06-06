@@ -12,12 +12,12 @@ ENV KUBECONFIG=
 RUN mkdir -p /mcrouter/template
 RUN mkdir -p /mcrouter/bin
 
-ADD docker-entrypoint.sh /mcrouter/docker-entrypoint.sh
+ADD docker-entrypoint.sh /mcrouter/bin/docker-entrypoint.sh
 ADD mcrouter-kuberentes-provisioner /mcrouter/bin/mcrouter-kuberentes-provisioner
 ADD ./template/mcrouter-config.tpl /mcrouter/template/mcrouter-config.tpl
 
 RUN chmod +x /mcrouter/bin/mcrouter-kuberentes-provisioner && \
   chmod +x /mcrouter/docker-entrypoint.sh
 
-#ENTRYPOINT [ "/mcrouter/docker-entrypoint.sh" ]
+#ENTRYPOINT [ "/mcrouter/bin/docker-entrypoint.sh" ]
 CMD tail -f /dev/null
