@@ -25,7 +25,7 @@ spec:
       containers:
       - name: mcrouter
         image: jamescarr/mcrouter:1.0.1
-        command: ["mcrouter", "-p", "5000", "-f", "/mcrouter/mcrouter-config.json"]
+        command: ["tail","-f", "/dev/null"]
         ports:
         - containerPort: 5000
         volumeMounts:
