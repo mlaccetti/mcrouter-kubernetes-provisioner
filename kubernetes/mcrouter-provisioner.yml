@@ -1,4 +1,4 @@
---
+---
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -39,7 +39,7 @@ spec:
         - mountPath: "/mcrouter"
           name: mcrouter-provisioner-storage
           readOnly: true
---
+---
 kind: Service
 apiVersion: v1
 metadata:
