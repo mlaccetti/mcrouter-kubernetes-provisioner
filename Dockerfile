@@ -2,7 +2,7 @@ FROM golang:1.8-alpine
 
 LABEL MAINTAINER="Michael Laccetti <michael@laccetti.com>"
 
-# You probably want to override this - either via CLI, or via k8s variables
+# You probably want to override this - either via CLI, or via k8s variables or samson env vars
 ENV MCROUTERCONFIG=/mcrouter/mcrouter-config.json
 ENV INPUTTEMPLATE=/mcr/template/mcrouter-config.tpl
 ENV NAMESPACE=
