@@ -31,7 +31,8 @@ spec:
           readOnly: false
       - name: mcrouter
         image: jamescarr/mcrouter:1.0.1
-        command: ["mcrouter", "-p", "5000", "-f", "/mcrouter/mcrouter-config.json"]
+        command: ["/bin/bash","-c"]
+        args: ["sleep 20 && mcrouter -p 5000 -f /mcrouter/mcrouter-config.json"]
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
