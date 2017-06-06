@@ -31,7 +31,7 @@ spec:
           readOnly: false
       - name: mcrouter
         image: jamescarr/mcrouter:1.0.1
-        command: ["tail","-f", "/dev/null"]
+        command: ["/mcr/bin/mcrouter-wrapper.sh"]
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
