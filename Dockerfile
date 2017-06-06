@@ -9,6 +9,10 @@ ENV NAMESPACE=
 ENV INCLUSTER=true
 ENV KUBECONFIG=
 
+# add any packages you may wan
+RUN apk update
+RUN apk add bash
+
 RUN mkdir -p /mcr/template
 RUN mkdir -p /mcr/bin
 
