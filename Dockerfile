@@ -17,7 +17,7 @@ ADD mcrouter-kuberentes-provisioner /mcr/bin/mcrouter-kuberentes-provisioner
 ADD ./template/mcrouter-config.tpl /mcr/template/mcrouter-config.tpl
 
 RUN chmod +x /mcr/bin/mcrouter-kuberentes-provisioner && \
-  chmod +x /mcr/docker-entrypoint.sh
+  chmod +x /mcr/bin/docker-entrypoint.sh
 
 #ENTRYPOINT [ "/mcr/bin/docker-entrypoint.sh" ]
 CMD tail -f /dev/null
