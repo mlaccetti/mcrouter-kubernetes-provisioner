@@ -28,3 +28,13 @@ spec:
         - mountPath: "/mcrouter"
           name: mcrouter-provisioner-storage
           readOnly: false
+      - name: mcrouter
+        image:         image: jamescarr/mcrouter:1.0.1
+        command: ["tail","-f", "/dev/null"]
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: "/mcrouter"
+          name: mcrouter-provisioner-storage
+          readOnly: true
