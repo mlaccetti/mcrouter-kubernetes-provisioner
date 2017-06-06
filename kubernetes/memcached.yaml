@@ -4,13 +4,15 @@ apiVersion: extensions/v1beta1
 metadata:
   name: memcached
   labels:
-    name: memcached-deployment
+    project: memcached
+    role: memcached
 spec:
   replicas: 3
   template:
     metadata:
       labels:
-        app: memcached
+        project: memcached
+        role: memcached
     spec:
       containers:
       - name: memcached
@@ -27,7 +29,8 @@ apiVersion: v1
 metadata:
   name: memcached-service
   labels:
-    name: memcached-deployment-service
+    project: memcached
+    role: memcached
 spec:
   type: ClusterIP
   clusterIP: None
@@ -36,4 +39,5 @@ spec:
       port: 11211
       targetPort: 11211
   selector:
-    app: memcached
+    project: memcached
+    role: memcached
