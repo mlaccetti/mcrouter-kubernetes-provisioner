@@ -2,9 +2,9 @@
 
 # wait for the template to avoid possible race
 
-while [ ! -e $INPUTTEMPLATE ]; do
-  echo "waiting for $INPUTTEMPLATE";
-  sleep 1;
+while [ ! -d /mcrouter ]; do
+  echo "waiting for /mcrouter"
+  sleep 10;
 done
 
 echo "Running: /mcr/bin/mcrouter-kuberentes-provisioner --mcrouterconfig=$MCROUTERCONFIG --inputtemplate=$INPUTTEMPLATE --namespace=$NAMESPACE --incluster=$INCLUSTER --kubeconfig=$KUBECONFIG"
