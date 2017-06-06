@@ -41,7 +41,7 @@ metadata:
     app: memcached
 spec:
   type: ClusterIP
-  clusterIP: "None"
+  clusterIP: 
   ports:
     - protocol: TCP
       port: 11211
