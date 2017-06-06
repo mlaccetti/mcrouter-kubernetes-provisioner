@@ -3,18 +3,18 @@ apiVersion: extensions/v1beta1
 metadata:
   name: mcrouter-provisioner
   labels:
-    project: mcrouter-provisioner
+    project: mcrouter-memcached
     role: mcrouter-provisioner
 spec:
   replicas: 1
   selector:
     matchLabels:
-      project: mcrouter-provisioner
+      project: mcrouter-memcached
       role: mcrouter-provisioner
   template:
     metadata:
       labels:
-        project: mcrouter-provisioner
+        project: mcrouter-memcached
         role: mcrouter-provisioner
     spec:
       volumes:
