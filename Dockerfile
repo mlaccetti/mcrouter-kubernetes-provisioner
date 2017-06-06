@@ -3,20 +3,21 @@ FROM golang:1.8-alpine
 LABEL MAINTAINER="Michael Laccetti <michael@laccetti.com>"
 
 # You probably want to override this - either via CLI, or via k8s variables
-ENV MCROUTERCONFIG=/srv/nfs/mcrouter-config.json
-ENV INPUTTEMPLATE=/mkp/template/mcrouter-config.tpl
+ENV MCROUTERCONFIG=/mcrouter/mcrouter-config.json
+ENV INPUTTEMPLATE=/mcrouter/template/mcrouter-config.tpl
 ENV NAMESPACE=
 ENV INCLUSTER=true
 ENV KUBECONFIG=
 
-RUN mkdir -p /mkp/template
+RUN mkdir -p /mcrouter/template
+RUN mkdir -p /mcrouter/bin
 
-ADD docker-entrypoint.sh /mkp/docker-entrypoint.sh
-ADD mcrouter-kuberentes-provisioner /mkp/mcrouter-kuberentes-provisioner
-ADD ./template/mcrouter-config.tpl /mkp/template/mcrouter-config.tpl
+ADD docker-entrypoint.sh /mcrouter/docker-entrypoint.sh
+ADD mcrouter-kuberentes-provisioner /mcrouter/bin/mcrouter-kuberentes-provisioner
+ADD ./template/mcrouter-config.tpl /mcrouter/template/mcrouter-config.tpl
 
-RUN chmod +x /mkp/mcrouter-kuberentes-provisioner && \
-  chmod +x /mkp/docker-entrypoint.sh
+RUN chmod +x /mcrouter/bin/mcrouter-kuberentes-provisioner && \
+  chmod +x /mcrouter/docker-entrypoint.sh
 
-#ENTRYPOINT [ "/mkp/docker-entrypoint.sh" ]
+#ENTRYPOINT [ "/mcrouter/docker-entrypoint.sh" ]
 CMD tail -f /dev/null
