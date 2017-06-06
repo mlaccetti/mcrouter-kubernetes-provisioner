@@ -6,17 +6,20 @@ metadata:
   labels:
     project: mcrouter-memcached
     role: memcached-server
+      app: memcached
 spec:
   replicas: 2
   selector:
     matchLabels:
       project: mcrouter-memcached
       role: memcached-server
+      app: memcached
   template:
     metadata:
       labels:
         project: mcrouter-memcached
         role: memcached-server
+        app: memcached
     spec:
       containers:
       - name: memcached
@@ -35,6 +38,7 @@ metadata:
   labels:
     project: mcrouter-memcached
     role: memcached-server
+    app: memcached
 spec:
   type: ClusterIP
   clusterIP: None
@@ -45,3 +49,4 @@ spec:
   selector:
     project: mcrouter-memcached
     role: memcached-server
+    app: memcached
