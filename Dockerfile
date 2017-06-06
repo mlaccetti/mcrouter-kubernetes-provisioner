@@ -17,13 +17,11 @@ RUN mkdir -p /mcr/template
 RUN mkdir -p /mcr/bin
 
 ADD docker-entrypoint.sh /mcr/bin/docker-entrypoint.sh
-ADD mcrouter-wrapper.sh /mcr/bin/mcrouter-wrapper.sh
 ADD mcrouter-kuberentes-provisioner /mcr/bin/mcrouter-kuberentes-provisioner
 ADD ./template/mcrouter-config.tpl /mcr/template/mcrouter-config.tpl
 
 RUN chmod +x /mcr/bin/mcrouter-kuberentes-provisioner && \
-  chmod +x /mcr/bin/docker-entrypoint.sh && \
-  chmod +x /mcr/bin/mcrouter-wrapper.sh 
+  chmod +x /mcr/bin/docker-entrypoint.sh 
 
 ENTRYPOINT [ "/mcr/bin/docker-entrypoint.sh" ]
 #CMD tail -f /dev/null
