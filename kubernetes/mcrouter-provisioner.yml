@@ -23,6 +23,9 @@ spec:
           emptyDir: {}
       containers:
       - name: mcrouter-provisioner
+        env:
+        - name: CLUSTER_ROLE
+          value: "provisioner"
         image: mlaccetti/mcrouter-kubernetes-provisioner:master
         imagePullPolicy: Always
         volumeMounts:

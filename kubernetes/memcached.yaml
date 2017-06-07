@@ -24,6 +24,9 @@ spec:
       containers:
       - name: memcached
         image: memcached:1.4-alpine
+        env:
+        - name: CLUSTER_ROLE
+          value: "memcached"
         ports:
         - containerPort: 11211
 ---
