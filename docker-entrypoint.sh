@@ -49,7 +49,6 @@ provisioner)
   ;;
   memcached)
     echo "starting memcached" # TODO: may wana support large pages etc
-    tail -f /dev/null
     memcached -u root
     ;;
   mcrouter)
@@ -60,7 +59,7 @@ provisioner)
     ;;
   *)
   echo "not a valid role, exiting"
-  tail -f /dev/null
+  echo "$CLUSTER_ROLE found"
   exit -1
 esac
 
