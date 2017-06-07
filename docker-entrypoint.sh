@@ -50,7 +50,7 @@ provisioner)
   memcached)
     echo "starting memcached" # TODO: may wana support large pages etc
     tail -f /dev/null
-    memcached -d -u root
+    memcached -u root
     ;;
   mcrouter)
     echo "starting up mcrouter"
