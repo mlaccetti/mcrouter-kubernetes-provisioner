@@ -49,6 +49,7 @@ provisioner)
   ;;
   memcached)
     echo "starting memcached" # TODO: may wana support large pages etc
+    tail -f /dev/null
     memcached -d -u root
     ;;
   mcrouter)
