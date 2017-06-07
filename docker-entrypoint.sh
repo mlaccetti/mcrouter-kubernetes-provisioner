@@ -10,9 +10,7 @@
 TRIES=0
 MAX_TRIES=240
 
-case $CLUSTER_ROLE in
-
-provisioner)
+waitforvolume() {
   while true ; do
     touch /mcrouter/.foo >> /dev/null 2>&1
     if [ $? != 0 ]; then
@@ -28,6 +26,19 @@ provisioner)
       break;
     fi
   done
+}
+
+waitforconfig() {
+  while [ ! -f /mcrouter/mcrouter-config.json ]; do
+    echo "wating for mcrouter config"
+    sleep 1;
+  done
+}
+
+case $CLUSTER_ROLE in
+
+provisioner)
+  waitforvolume
   echo "Running: /mcr/bin/mcrouter-kuberentes-provisioner --mcrouterconfig=$MCROUTERCONFIG --inputtemplate=$INPUTTEMPLATE --namespace=$NAMESPACE --incluster=$INCLUSTER --kubeconfig=$KUBECONFIG"
   /mcr/bin/mcrouter-kuberentes-provisioner \
     --mcrouterconfig=$MCROUTERCONFIG \
@@ -43,10 +54,7 @@ provisioner)
   mcrouter)
     echo "starting up mcrouter"
     # make sure the config is there before we start
-    while [ ! -f /mcrouter/mcrouter-config.json ]; do
-      echo "wating for mcrouter config"
-      sleep 1;
-    done
+    waitforconfig
     mcrouter -p 5000 -f /mcrouter/mcrouter-config.json
     ;;
   *)
