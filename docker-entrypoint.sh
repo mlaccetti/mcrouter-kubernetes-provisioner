@@ -9,25 +9,25 @@
 
 TRIES=0
 MAX_TRIES=240
-while true ; do
-  touch /mcrouter/.foo >> /dev/null 2>&1
-  if [ $? != 0 ]; then
-    echo "/mcrouter isn't available yet. have checked $TRIES out of $MAX_TRIES times"
-    TRIES=$(($TRIES + 1))
-    sleep 1;
-    if [ $TRIES -gt $MAX_TRIES ]; then
-      echo "Tried $MAX_TRIES times, exiting"
-      exit -1
-    fi
-  else
-    rm -f /mcrouter/.foo
-    break;
-  fi
-done
 
 case $CLUSTER_ROLE in
 
 provisioner)
+  while true ; do
+    touch /mcrouter/.foo >> /dev/null 2>&1
+    if [ $? != 0 ]; then
+      echo "/mcrouter isn't available yet. have checked $TRIES out of $MAX_TRIES times"
+      TRIES=$(($TRIES + 1))
+      sleep 1;
+      if [ $TRIES -gt $MAX_TRIES ]; then
+        echo "Tried $MAX_TRIES times, exiting"
+        exit -1
+      fi
+    else
+      rm -f /mcrouter/.foo
+      break;
+    fi
+  done
   echo "Running: /mcr/bin/mcrouter-kuberentes-provisioner --mcrouterconfig=$MCROUTERCONFIG --inputtemplate=$INPUTTEMPLATE --namespace=$NAMESPACE --incluster=$INCLUSTER --kubeconfig=$KUBECONFIG"
   /mcr/bin/mcrouter-kuberentes-provisioner \
     --mcrouterconfig=$MCROUTERCONFIG \
