@@ -11,7 +11,7 @@ ENV KUBECONFIG=
 
 # add any packages you may wan
 RUN apk update
-RUN apk add bash
+RUN apk add bash memcached
 
 RUN mkdir -p /mcr/template
 RUN mkdir -p /mcr/bin
